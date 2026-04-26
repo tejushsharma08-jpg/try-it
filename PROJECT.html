@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DON'T CLICK 😼</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: white;
+      font-family: Arial;
+    }
+
+    #loading {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      z-index: 10;
+    }
+
+    #btn {
+      position: absolute;
+      padding: 15px 25px;
+      font-size: 20px;
+      background: lime;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    #msg {
+      position: absolute;
+      top: 10%;
+      width: 100%;
+      text-align: center;
+      font-size: 30px;
+      display: none;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 40px;
+      animation: fall 2s linear infinite;
+    }
+
+    @keyframes fall {
+      from { top: -50px; }
+      to { top: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading">Loading game... 😈</div>
+
+<button id="btn">CLICK ME 😏</button>
+
+<div id="msg">meh kaha ladle 😼 meow ghop ghop ghop 😂😂😂</div>
+
+<audio id="sound" src="https://www.myinstants.com/media/sounds/cat-meow.mp3"></audio>
+
+<script>
+let btn = document.getElementById("btn");
+let msg = document.getElementById("msg");
+let sound = document.getElementById("sound");
+
+let size = 1;
+let speed = 1;
+
+// Fake loading screen
+setTimeout(() => {
+  document.getElementById("loading").style.display = "none";
+}, 2000);
+
+// Try fullscreen
+document.body.onclick = () => {
+  document.documentElement.requestFullscreen().catch(()=>{});
+};
+
+// Move + shrink + speed up
+btn.addEventListener("mouseover", () => {
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 50);
+
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+
+  size *= 0.9;
+  speed += 0.2;
+
+  btn.style.transform = "scale(" + size + ")";
+
+  msg.style.display = "block";
+
+  // Play sound
+  sound.currentTime = 0;
+  sound.play();
+
+  // Screen shake
+  document.body.style.transform = `translate(${Math.random()*10}px, ${Math.random()*10}px)`;
+
+  // Spawn emojis
+  for (let i = 0; i < 5; i++) {
+    let e = document.createElement("div");
+    e.innerText = "😂";
+    e.className = "emoji";
+    e.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(e);
+
+    setTimeout(() => e.remove(), 2000);
+  }
+});
+
+// If clicked (rare 😏)
+btn.addEventListener("click", () => {
+  alert("BRO YOU CAUGHT IT 😳🔥");
+});
+</script>
+
+</body>
+</html>
